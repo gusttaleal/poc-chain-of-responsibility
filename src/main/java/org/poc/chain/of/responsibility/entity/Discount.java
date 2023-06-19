@@ -3,17 +3,19 @@ package org.poc.chain.of.responsibility.entity;
 import java.math.BigDecimal;
 
 public abstract class Discount {
-    private final BigDecimal rate;
+    private final Discount nextDiscount;
 
-    public Discount(BigDecimal rate) {
-        this.rate = rate;
+    public Discount(Discount nextDiscount) {
+        this.nextDiscount = nextDiscount;
     }
 
     public BigDecimal execute(Order order) {
-        return order.getAmount().subtract(order.getAmount().multiply(rate));
+        if (discountRule(order))
+            return order.getAmount().subtract(order.getAmount().multiply(this.discountRate()));
+        return nextDiscount.execute(order);
     }
 
-    public BigDecimal next(Discount discount, Order order) {
-        return discount.execute(order);
-    }
+    protected abstract BigDecimal discountRate();
+
+    protected abstract Boolean discountRule(Order order);
 }

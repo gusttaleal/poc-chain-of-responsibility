@@ -9,11 +9,13 @@ import org.poc.chain.of.responsibility.entity.Order;
 
 public class ApplyDiscount {
     public static void execute(Order order) {
-        Discount discount = DiscountToFiveOrMoreItemsAndOrdersGreaterOrEqualThanFiftyReais.builder()
-                .discount(DiscountToFiveOrMoreItems.builder()
-                        .discount(DiscountToOrdersGreaterOrEqualThanFiftyReais.builder()
-                                .discount(NoDiscount.builder()
-                                        .build()).build()).build()).build();
+        Discount discount = new DiscountToFiveOrMoreItemsAndOrdersGreaterOrEqualThanFiftyReais(
+                new DiscountToOrdersGreaterOrEqualThanFiftyReais(
+                        new DiscountToFiveOrMoreItems(
+                                new NoDiscount()
+                        )
+                )
+        );
 
         System.out.printf("Final order amount is R$ %s%n", discount.execute(order));
     }
