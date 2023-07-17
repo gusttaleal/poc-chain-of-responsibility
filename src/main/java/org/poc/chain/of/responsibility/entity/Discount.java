@@ -1,7 +1,7 @@
 package org.poc.chain.of.responsibility.entity;
 
 import java.math.BigDecimal;
-
+/* Template */
 public abstract class Discount {
     private final Discount nextDiscount;
 
@@ -10,12 +10,12 @@ public abstract class Discount {
     }
 
     public BigDecimal execute(Order order) {
-        if (discountRule(order))
+        if (doesOrderMeetDiscountRule(order))
             return order.getAmount().subtract(order.getAmount().multiply(this.discountRate()));
         return nextDiscount.execute(order);
     }
 
     protected abstract BigDecimal discountRate();
 
-    protected abstract Boolean discountRule(Order order);
+    protected abstract Boolean doesOrderMeetDiscountRule(Order order);
 }
