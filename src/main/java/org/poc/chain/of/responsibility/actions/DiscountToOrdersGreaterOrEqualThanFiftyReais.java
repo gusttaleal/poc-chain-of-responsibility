@@ -7,9 +7,6 @@ import org.poc.chain.of.responsibility.entity.Order;
 import java.math.BigDecimal;
 
 public class DiscountToOrdersGreaterOrEqualThanFiftyReais extends Discount {
-    public DiscountToOrdersGreaterOrEqualThanFiftyReais(Discount nextDiscount) {
-        super(nextDiscount);
-    }
 
     @Override
     protected BigDecimal discountRate() {

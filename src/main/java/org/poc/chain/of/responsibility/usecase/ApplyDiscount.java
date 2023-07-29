@@ -9,14 +9,22 @@ import org.poc.chain.of.responsibility.entity.Order;
 
 public class ApplyDiscount {
     public static void execute(Order order) {
-        Discount discount = new DiscountToFiveOrMoreItemsAndOrdersGreaterOrEqualThanFiftyReais(
-                new DiscountToOrdersGreaterOrEqualThanFiftyReais(
-                        new DiscountToFiveOrMoreItems(
-                                new NoDiscount()
-                        )
-                )
+        Discount discount = setChainSequence(
+                new DiscountToFiveOrMoreItemsAndOrdersGreaterOrEqualThanFiftyReais(),
+                new DiscountToOrdersGreaterOrEqualThanFiftyReais(),
+                new DiscountToFiveOrMoreItems(),
+                new NoDiscount()
         );
 
         System.out.printf("Final order amount is R$ %s%n", discount.execute(order));
+    }
+
+    private static Discount setChainSequence(Discount first, Discount... chain) {
+        var head = first;
+        for (var next : chain) {
+            head.setNext(next);
+            head = next;
+        }
+        return first;
     }
 }

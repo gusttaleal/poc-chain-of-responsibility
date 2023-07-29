@@ -7,9 +7,6 @@ import org.poc.chain.of.responsibility.entity.Order;
 import java.math.BigDecimal;
 
 public class NoDiscount extends Discount {
-    public NoDiscount() {
-        super(null);
-    }
 
     @Override
     protected BigDecimal discountRate() {

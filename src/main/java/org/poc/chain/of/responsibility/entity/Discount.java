@@ -1,11 +1,12 @@
 package org.poc.chain.of.responsibility.entity;
 
 import java.math.BigDecimal;
+
 /* Template */
 public abstract class Discount {
-    private final Discount nextDiscount;
+    private Discount nextDiscount;
 
-    public Discount(Discount nextDiscount) {
+    public void setNext(Discount nextDiscount) {
         this.nextDiscount = nextDiscount;
     }
 
